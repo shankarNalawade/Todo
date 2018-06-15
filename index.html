@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todo_app">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TODO APP</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <section id="todoapp" ng-controller="todoCtrl">
+        <header id="header">
+            <form id="todo-form" ng-submit="add_new();">
+                <input id="new-todo" placeholder="Enter Todo List" ng-model="newTodo" autofocus>
+            </form>
+        </header>
+        <section id="main" ng-cloak>
+            <ul id="todo-list">
+                <li ng-repeat="todo in todos track by $index">
+                    <div class="view" ng-class="(todo.completed == true)?'checkedItem':'normalItem'" ng-if="((todo.completed == true || todo.completed == false) && status =='all')||(todo.completed == false && status =='active') || (todo.completed == true && status =='complete')">
+                        <input class="toggle" type="checkbox" id="{{todo.title}}{{$index}}" ng-model="todo.completed" ng-change="checkListChange()">
+                        <label for="{{todo.title}}{{$index}}" class="toggle_check"></label>
+                        <label class="todo_title">{{todo.title}}</label>
+                        <button class="destroy" ng-click="deleteTodo(todo);">&#215; </button>
+                    </div>
+                </li>
+            </ul>
+        </section>
+        <footer id="footer" ng-cloak>
+            <span id="todo-count">
+                <strong>Total Count : {{todos.length}}</strong>
+            </span>
+            <ul id="filters" >
+                <li ng-click="fliterTodos('all');" class="activeList" checkstatus>All</li>
+                <li ng-click="fliterTodos('active');" checkstatus>Active</li>
+                <li ng-click="fliterTodos('complete');" checkstatus>Completed</li>
+            </ul>
+        </footer>
+
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/controller/todoCtrl.js"></script>
+    <script type="text/javascript" src="js/service/localstorageService.js"></script>
+    <script type="text/javascript" src="js/service/todoServices.js"></script>
+</body>
+
+</html>
